@@ -146,7 +146,7 @@ if __name__ == "__main__":
     modelObjects("Sphere")
     addCube(-6,0,4,1,3.5,1, "Mat1")
     modelObjects("Cube01")
-    addCube(-2.5,-2,4,3.5,1,1, "Mat2")
+    addCube(-2.5,-2,4,3.5,1,0.8, "Mat2")
     modelObjects("Cube02")
     addPlane(-6.1,3.4,4,0.8,0.8,"Mat3")
     modelObjects("Plane")
