@@ -39,13 +39,10 @@ def select(indexes):
     bpy.ops.object.editmode_toggle()
     bpy.ops.mesh.quads_convert_to_tris(quad_method='BEAUTY', ngon_method='BEAUTY')
     bpy.ops.mesh.select_all(action='TOGGLE')
-    bpy.ops.object.editmode_toggle()
     obj = bpy.context.active_object
+    bpy.ops.object.editmode_toggle()
     for index in indexes:
         obj.data.polygons[index].select = True
-    bpy.ops.object.editmode_toggle()
-    bpy.ops.object.editmode_toggle()
-    bpy.ops.mcell.region_faces_assign()
     
 def addSphere(xl,yl,zl,xs,ys,zs,name):
     bpy.ops.mesh.primitive_uv_sphere_add(location=(xl,yl,zl))
@@ -84,9 +81,12 @@ def modelObjects(name):
     bpy.context.object.name = name
     
     if(bpy.context.active_object.name == "Cube02"):
+        select([6,0])
+        bpy.ops.object.editmode_toggle()
         bpy.ops.mcell.region_add()
         bpy.context.object.mcell.regions.region_list[0].name = "Open"
-        select([6,0])
+        bpy.ops.mcell.region_faces_assign()
+        bpy.ops.object.editmode_toggle()
         
         
 def parameters(name,expr):
