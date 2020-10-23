@@ -42,7 +42,10 @@ def select(indexes):
     bpy.ops.object.editmode_toggle()
     obj = bpy.context.active_object
     for index in indexes:
-        obj.data.polygons[index].select = True 
+        obj.data.polygons[index].select = True
+    bpy.ops.object.editmode_toggle()
+    bpy.ops.object.editmode_toggle()
+    bpy.ops.mcell.region_faces_assign()
     
 def addSphere(xl,yl,zl,xs,ys,zs,name):
     bpy.ops.mesh.primitive_uv_sphere_add(location=(xl,yl,zl))
@@ -84,7 +87,7 @@ def modelObjects(name):
         bpy.ops.mcell.region_add()
         bpy.context.object.mcell.regions.region_list[0].name = "Open"
         select([6,0])
-        bpy.ops.mcell.region_faces_assign()
+        
         
 def parameters(name,expr):
     bpy.ops.mcell.add_parameter()
@@ -109,6 +112,31 @@ def surfaceClasses():
     bpy.context.scene.mcell.mod_surf_regions.mod_surf_regions_list[0].region_selection = 'SEL'
     bpy.context.scene.mcell.mod_surf_regions.mod_surf_regions_list[0].region_name = "Open"
 
+def reaction(index1, reactants, products, rate, index2):
+    bpy.ops.mcell.reaction_add()
+    bpy.context.scene.mcell.reactions.reaction_list[index1].reactants = reactants
+    bpy.context.scene.mcell.reactions.reaction_list[index1].products = products
+    bpy.context.scene.mcell.parameter_system.panel_parameter_list[index2].expr = rate
+    
+def releaseSites(index1, name, molecule, object, quantity, index2):
+    bpy.ops.mcell.release_site_add()
+    bpy.context.scene.mcell.release_sites.mol_release_list[index1].name = name
+    bpy.context.scene.mcell.release_sites.mol_release_list[index1].molecule = molecule
+    bpy.context.scene.mcell.release_sites.mol_release_list[index1].shape = 'OBJECT'
+    bpy.context.scene.mcell.release_sites.mol_release_list[index1].object_expr = object
+    bpy.context.scene.mcell.parameter_system.panel_parameter_list[index2].expr = quantity
+
+def reactionProducts(index, name):
+    bpy.ops.mcell.rxn_output_add()
+    bpy.context.scene.mcell.rxn_output.rxn_output_list[index].molecule_name = name
+
+#def runSimulation():
+    #bpy.context.scene.mcell.parameter_system.panel_parameter_list[0].expr = "iters"
+    #bpy.context.scene.mcell.parameter_system.panel_parameter_list[1].expr = "dt"
+    #bpy.context.scene.mcell.initialization.warnings = True
+    #bpy.context.scene.mcell.initialization.all_warnings = 'WARNING'
+    
+#def save():
 
 
 if __name__ == "__main__":
@@ -129,9 +157,26 @@ if __name__ == "__main__":
     parameters("dc","1e-4")
     parameters("dr","1e-6")
     parameters("fwd_rc","1e8")
-    parameters("nb_nc","4000")
-    parameters("nb_i","3000")
+    parameters("nb_nt","4000")
+    parameters("nb_i","4000")
+    parameters("nb_rf","3000")
     molecules(0,"Neurotransmetteur","3D","dn",17)
     molecules(1,"Ion","3D","di",21)
     molecules(2,"Recepteur_ferme","2D","dr",25)
+    molecules(3,"Cplx","3D","dc",29)
+    molecules(4,"Recepteur_ouvert","2D","dr",33)
     surfaceClasses()
+    reaction(0, "Neurotransmetteur + Ion", "Cplx", "fwd_rc", 38)
+    reaction(1, "Cplx; + Recepteur_ferme'", "Recepteur_ouvert'", "fwd_rc", 40)
+    releaseSites(0, "Release_Site_1", "Ion", "Cube02", "nb_i", 47)
+    releaseSites(1, "Release_Site_2", "Neurotransmetteur", "Sphere", "nb_nt", 54)
+    releaseSites(2, "Release_Site_3", "Recepteur_ferme", "Plane", "nb_rf", 61)
+    reactionProducts(0, "Neurotransmetteur")
+    reactionProducts(1, "Ion")
+    reactionProducts(2, "Recepteur_ferme")
+    reactionProducts(3, "Cplx")
+    reactionProducts(4, "Recepteur_ouvert")
+    #runSimulation()
+
+    
+    
