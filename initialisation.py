@@ -1,3 +1,12 @@
+'''
+# Initialization file of the Strubi project 
+# File used in Blendcell
+# Subject G
+# Marlene Barus, Ayse Ergun , Caroline Meguerditchian
+# 16 October 2020
+
+'''
+
 import bpy
 from bpy.props import *
 
@@ -33,8 +42,11 @@ def initiation():
     bpy.context.scene.mcell.cellblender_main_panel.preferences_select = True
     bpy.ops.mcell.init_cellblender()
     bpy.ops.mcell.preferences_save(name="Cb")
-    bpy.ops.mcell.set_mcell_binary(filepath="/Users/marlenebarus/Master2/StrubiGL/mcell_3.4_osx")
+    ## Don't forget to change the pathway of your mcell file ! 
+    #bpy.ops.mcell.set_mcell_binary(filepath="/Users/marlenebarus/Master2/StrubiGL/mcell_3.4_osx")
+    bpy.ops.mcell.set_mcell_binary(filepath="/Users/ayse/Desktop/M2/StrubiGL/blender/mcell_3.4_osx")
  
+#Select faces in edit mode by indicating their index
 def select(indexes):
     bpy.ops.object.editmode_toggle()
     bpy.ops.mesh.quads_convert_to_tris(quad_method='BEAUTY', ngon_method='BEAUTY')
@@ -43,7 +55,8 @@ def select(indexes):
     bpy.ops.object.editmode_toggle()
     for index in indexes:
         obj.data.polygons[index].select = True
-    
+
+
 def addSphere(xl,yl,zl,xs,ys,zs,name):
     bpy.ops.mesh.primitive_uv_sphere_add(location=(xl,yl,zl))
     bpy.ops.transform.resize(value=(xs, ys, zs))
@@ -64,7 +77,6 @@ def addCube(xl,yl,zl,xs,ys,zs,name):
     bpy.context.object.active_material.diffuse_color = (0.002,0.8,0.029) #change color
     bpy.context.object.active_material.use_transparency = True
     bpy.context.object.active_material.alpha = 0.5
-
     
 def addPlane(xl,yl,zl,xs,ys,name):
     bpy.ops.mesh.primitive_plane_add(location=(xl,yl,zl))
@@ -105,18 +117,19 @@ def modelObjects(name):
         bpy.context.object.mcell.regions.region_list[0].name = "Open3"
         bpy.ops.mcell.region_faces_assign()
         bpy.ops.object.editmode_toggle()
-        
-        
+
+#Simulation parameters
 def parameters(name,expr):
     bpy.ops.mcell.add_parameter()
     bpy.context.scene.mcell.parameter_system.active_name = name
     bpy.context.scene.mcell.parameter_system.active_expr = expr
-    
+#Adding molecules
 def molecules(i,name,type,diffusion,x):
     bpy.ops.mcell.molecule_add()
     bpy.context.scene.mcell.molecules.molecule_list[i].name = name
     bpy.context.scene.mcell.molecules.molecule_list[i].type = type
     bpy.context.scene.mcell.parameter_system.panel_parameter_list[x].expr = diffusion
+
 
 def surfaceClasses(index, name, object, region_name):
     bpy.ops.mcell.surface_class_add()
@@ -159,6 +172,9 @@ def runSimulation():
 if __name__ == "__main__":
     clear()
     initiation()
+# ------------------------------------------------------------------------
+# Creating Objects 
+# ------------------------------------------------------------------------
     addSphere(-1.6,-1.9,4,1,0.5,0.5,"Mat0")
     modelObjects("Sphere")
     addCube(-6,-2,4,1,1.03,0.81, "Mat1")
@@ -167,32 +183,63 @@ if __name__ == "__main__":
     modelObjects("Cube02")
     addPlane(-6.95,-2,4,0.8,0.8,"Mat3")
     modelObjects("Plane")
+# ------------------------------------------------------------------------
+# It is possible to change the parameters by modifying the following line : 
+# ------------------------------------------------------------------------
+    #number of iterations 
     parameters("iters","1500")
+    #reaction time
     parameters("dt","1e-5")
+    #Neurotransmitter diffusion constant
     parameters("dn","1e-4")
+    #Ion diffusion constant
     parameters("di","1e-5")
+    #Complex diffusion constant
     parameters("dc","1e-4")
+    #receptor diffusion constant
     parameters("dr","1e-6")
+    #Reaction Rate
     parameters("fwd_rc","1e8")
+    #number of neurotransmitter
     parameters("nb_nt","2000")
+    #number of ion
     parameters("nb_i","4000")
+    #number of receptor
     parameters("nb_rf","1500")
+# ------------------------------------------------------------------------
+# Adding the Molecules 
+# ------------------------------------------------------------------------
     molecules(0,"Neurotransmetteur","3D","dn",17)
     molecules(1,"Ion","3D","di",21)
     molecules(2,"Recepteur_ferme","2D","dr",25)
     molecules(3,"Cplx","3D","dc",29)
     molecules(4,"Recepteur_ouvert","2D","dr",33)
+# ------------------------------------------------------------------------
+# Defining the Surface classes
+# ------------------------------------------------------------------------
     surfaceClasses(0, "passage1", "Cube01", "Open1")
     surfaceClasses(1, "passage2", "Cube02", "Open2")
     surfaceClasses(2, "passage3", "Sphere", "Open3")
+# ------------------------------------------------------------------------
+# Adding the 2 reactions 
+# ------------------------------------------------------------------------
     reaction(0, "Neurotransmetteur + Ion", "Cplx", "fwd_rc", 40)
     reaction(1, "Cplx; + Recepteur_ferme,", "Recepteur_ouvert,", "fwd_rc", 42)
+# ------------------------------------------------------------------------
+# defining release sites
+# ------------------------------------------------------------------------
     releaseSites(0, "Release_Site_1", "Ion", "Cube02", "nb_i", 49)
     releaseSites(1, "Release_Site_2", "Neurotransmetteur", "Sphere", "nb_nt", 56)
     releaseSites(2, "Release_Site_3", "Recepteur_ferme", "Plane", "nb_rf", 63)
+# ------------------------------------------------------------------------
+# Reaction products
+# ------------------------------------------------------------------------
     reactionProducts(0, "Neurotransmetteur")
     reactionProducts(1, "Ion")
     reactionProducts(2, "Recepteur_ferme")
     reactionProducts(3, "Cplx")
     reactionProducts(4, "Recepteur_ouvert")
+# ------------------------------------------------------------------------
+# Run 
+# ------------------------------------------------------------------------
     runSimulation()
