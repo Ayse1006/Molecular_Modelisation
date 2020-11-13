@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 ##################################### FUNCTIONS #####################################
 
-# Chargement des données
+# Chargement des donnees
 ### CONDITION : GEOMETRIE MODIFIEE ###
 
 # Neurotransmetteurs
@@ -32,7 +32,7 @@ yNt_8 = np.genfromtxt("react_data/seed_00008/Neurotransmetteur.World.dat", dtype
 yNt_9 = np.genfromtxt("react_data/seed_00009/Neurotransmetteur.World.dat", dtype=float)[:, 1]
 yNt_10 = np.genfromtxt("react_data/seed_00010/Neurotransmetteur.World.dat", dtype=float)[:, 1]
 
-# Recepteurs fermés
+# Recepteurs fermes
 
 xRf = np.genfromtxt("react_data/seed_00001/Recepteur_ferme.World.dat", dtype=float)[:, 0]
 yRf_1 = np.genfromtxt("react_data/seed_00001/Recepteur_ferme.World.dat", dtype=float)[:, 1]
@@ -74,7 +74,7 @@ yCplx_8 = np.genfromtxt("react_data/seed_00008/Cplx.World.dat", dtype=float)[:, 
 yCplx_9 = np.genfromtxt("react_data/seed_00009/Cplx.World.dat", dtype=float)[:, 1]
 yCplx_10 = np.genfromtxt("react_data/seed_00010/Cplx.World.dat", dtype=float)[:, 1]
 
-# Récepteurs ouverts
+# Recepteurs ouverts
 
 xRo = np.genfromtxt("react_data/seed_00001/Recepteur_ouvert.World.dat", dtype=float)[:, 0]
 yRo_1 = np.genfromtxt("react_data/seed_00001/Recepteur_ouvert.World.dat", dtype=float)[:, 1]
@@ -89,7 +89,7 @@ yRo_9 = np.genfromtxt("react_data/seed_00009/Recepteur_ouvert.World.dat", dtype=
 yRo_10 = np.genfromtxt("react_data/seed_00010/Recepteur_ouvert.World.dat", dtype=float)[:, 1]
 
 
-# Fonction qui génère un tableau des moyennes des 10 simulations
+# Fonction qui genère un tableau des moyennes des 10 simulations
 def mean_list(dt, y1, y2, y3, y4, y5, y6, y7, y8, y9, y10):
     new_list = []
 
@@ -99,7 +99,7 @@ def mean_list(dt, y1, y2, y3, y4, y5, y6, y7, y8, y9, y10):
     return(new_list)
 
 
-# Fonctions qui génèrent des tableaux des écarts-types des 10 simulations
+# Fonctions qui genèrent des tableaux des ecarts-types des 10 simulations
 def addSd_list(dt, mean_list, y1, y2, y3, y4, y5, y6, y7, y8, y9, y10):
     sd_list = []
 
@@ -140,7 +140,7 @@ def substractSd_list(dt, mean_list, y1, y2, y3, y4, y5, y6, y7, y8, y9, y10):
         sd_list.append(sdMean)
     return(sd_list)
 
-# Fonction qui génère le plot de la la fitted curve des moyennes et écart-type en fonction du temps :
+# Fonction qui genère le plot de la la fitted curve des moyennes et ecart-type en fonction du temps :
 def makePlot(num, dt, meanList, addSd, substractSd, molecule):
     plt.subplot(num)
     plt.plot(dt, meanList, "orange", label="Moyenne")
@@ -164,11 +164,11 @@ def __main__():
     substractSd_Nt = substractSd_list(xNt, nt_list, yNt_1, yNt_2, yNt_3, yNt_4, yNt_5, yNt_6, yNt_7, yNt_8, yNt_9, yNt_10)
     makePlot(111, xNt, nt_list, addSd_Nt, substractSd_Nt, "de neurotransmetteurs")
 
-    # Récepteurs fermés
+    # Recepteurs fermes
     rf_list = mean_list(xRf, yRf_1, yRf_2, yRf_3, yRf_4, yRf_5, yRf_6, yRf_7, yRf_8, yRf_9, yRf_10)
     addSd_Rf = addSd_list(xRf, rf_list, yRf_1, yRf_2, yRf_3, yRf_4, yRf_5, yRf_6, yRf_7, yRf_8, yRf_9, yRf_10)
     substractSd_Rf = substractSd_list(xRf, rf_list, yRf_1, yRf_2, yRf_3, yRf_4, yRf_5, yRf_6, yRf_7, yRf_8, yRf_9, yRf_10)
-    makePlot(111, xRf, rf_list, addSd_Rf, substractSd_Rf, "de récepteurs fermés")
+    makePlot(111, xRf, rf_list, addSd_Rf, substractSd_Rf, "de recepteurs fermes")
 
     # Ions
     i_list = mean_list(xI, yI_1, yI_2, yI_3, yI_4, yI_5, yI_6, yI_7, yI_8, yI_9, yI_10)
@@ -182,11 +182,11 @@ def __main__():
     substractSd_Cplx = substractSd_list(xCplx, cplx_list, yCplx_1, yCplx_2, yCplx_3, yCplx_4, yCplx_5, yCplx_6, yCplx_7, yCplx_8, yCplx_9, yCplx_10)
     makePlot(111, xCplx, cplx_list, addSd_Cplx, substractSd_Cplx, "de complexes")
 
-    # Récepteurs ouverts
+    # Recepteurs ouverts
     ro_list = mean_list(xRo, yRo_1, yRo_2, yRo_3, yRo_4, yRo_5, yRo_6, yRo_7, yRo_8, yRo_9, yRo_10)
     addSd_Ro = addSd_list(xRo, ro_list, yRo_1, yRo_2, yRo_3, yRo_4, yRo_5, yRo_6, yRo_7, yRo_8, yRo_9, yRo_10)
     substractSd_Ro = substractSd_list(xRo, ro_list, yRo_1, yRo_2, yRo_3, yRo_4, yRo_5, yRo_6, yRo_7, yRo_8, yRo_9, yRo_10)
-    makePlot(111, xRo, ro_list, addSd_Ro, substractSd_Ro, "de récepteurs ouverts")
+    makePlot(111, xRo, ro_list, addSd_Ro, substractSd_Ro, "de recepteurs ouverts")
 
     #plt.show()
 
