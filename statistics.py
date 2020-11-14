@@ -148,7 +148,7 @@ def makePlot(num, dt, meanList, addSd, substractSd, molecule):
     plt.xlabel('Temps (s)')
     plt.title(molecule)
     plt.fill_between(dt, addSd, substractSd, alpha = 0.2, facecolor = "red")
-    plt.suptitle("Evolution du nombre molecules au cours du temps")
+    plt.suptitle("Evolution du nombre de molecules au cours du temps")
 
 
 
@@ -160,7 +160,7 @@ def __main__():
     addSd_Nt = addSd_list(xNt, nt_list, yNt_1, yNt_2, yNt_3, yNt_4, yNt_5, yNt_6, yNt_7, yNt_8, yNt_9, yNt_10)
     substractSd_Nt = substractSd_list(xNt, nt_list, yNt_1, yNt_2, yNt_3, yNt_4, yNt_5, yNt_6, yNt_7, yNt_8, yNt_9, yNt_10)
     makePlot(231, xNt, nt_list, addSd_Nt, substractSd_Nt, "Neurotransmetteurs")
-    plt.ylabel('Moyenne du nombre de molecules')
+    plt.ylabel('Nombre de molecules')
 
     # Recepteurs fermes
     rf_list = mean_list(xRf, yRf_1, yRf_2, yRf_3, yRf_4, yRf_5, yRf_6, yRf_7, yRf_8, yRf_9, yRf_10)
@@ -179,7 +179,7 @@ def __main__():
     addSd_Cplx = addSd_list(xCplx, cplx_list, yCplx_1, yCplx_2, yCplx_3, yCplx_4, yCplx_5, yCplx_6, yCplx_7, yCplx_8, yCplx_9, yCplx_10)
     substractSd_Cplx = substractSd_list(xCplx, cplx_list, yCplx_1, yCplx_2, yCplx_3, yCplx_4, yCplx_5, yCplx_6, yCplx_7, yCplx_8, yCplx_9, yCplx_10)
     makePlot(234, xCplx, cplx_list, addSd_Cplx, substractSd_Cplx, "Complexes")
-    plt.ylabel('Moyenne du nombre de molecules')
+    plt.ylabel('Nombre de molecules')
 
     # Recepteurs ouverts
     ro_list = mean_list(xRo, yRo_1, yRo_2, yRo_3, yRo_4, yRo_5, yRo_6, yRo_7, yRo_8, yRo_9, yRo_10)
