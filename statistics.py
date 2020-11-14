@@ -6,8 +6,6 @@
 
 '''
 
-
-
 ####### IMPORT #######
 from pylab import *
 import numpy as np
@@ -89,7 +87,7 @@ yRo_9 = np.genfromtxt("react_data/seed_00009/Recepteur_ouvert.World.dat", dtype=
 yRo_10 = np.genfromtxt("react_data/seed_00010/Recepteur_ouvert.World.dat", dtype=float)[:, 1]
 
 
-# Fonction qui genère un tableau des moyennes des 10 simulations
+# Fonction qui genere un tableau des moyennes des 10 simulations
 def mean_list(dt, y1, y2, y3, y4, y5, y6, y7, y8, y9, y10):
     new_list = []
 
@@ -99,7 +97,7 @@ def mean_list(dt, y1, y2, y3, y4, y5, y6, y7, y8, y9, y10):
     return(new_list)
 
 
-# Fonctions qui genèrent des tableaux des ecarts-types des 10 simulations
+# Fonctions qui generent des tableaux des ecarts-types des 10 simulations
 def addSd_list(dt, mean_list, y1, y2, y3, y4, y5, y6, y7, y8, y9, y10):
     sd_list = []
 
@@ -140,18 +138,17 @@ def substractSd_list(dt, mean_list, y1, y2, y3, y4, y5, y6, y7, y8, y9, y10):
         sd_list.append(sdMean)
     return(sd_list)
 
-# Fonction qui genère le plot de la la fitted curve des moyennes et ecart-type en fonction du temps :
+# Fonction qui genere le plot de la la fitted curve des moyennes et ecart-type en fonction du temps :
 def makePlot(num, dt, meanList, addSd, substractSd, molecule):
     plt.subplot(num)
     plt.plot(dt, meanList, "orange", label="Moyenne")
     plt.plot(dt, addSd, "red", label="Ecart-type")
     plt.plot(dt, substractSd, "red")
     plt.legend()
-    plt.xlabel('Temps')
-    plt.ylabel('Moyenne du nombre '+molecule)
-    plt.title("Shadow fitted curve")
+    plt.xlabel('Temps (s)')
+    plt.title(molecule)
     plt.fill_between(dt, addSd, substractSd, alpha = 0.2, facecolor = "red")
-    plt.show()
+    plt.suptitle("Evolution du nombre molecules au cours du temps")
 
 
 
@@ -162,33 +159,36 @@ def __main__():
     nt_list = mean_list(xNt, yNt_1, yNt_2, yNt_3, yNt_4, yNt_5, yNt_6, yNt_7, yNt_8, yNt_9, yNt_10)
     addSd_Nt = addSd_list(xNt, nt_list, yNt_1, yNt_2, yNt_3, yNt_4, yNt_5, yNt_6, yNt_7, yNt_8, yNt_9, yNt_10)
     substractSd_Nt = substractSd_list(xNt, nt_list, yNt_1, yNt_2, yNt_3, yNt_4, yNt_5, yNt_6, yNt_7, yNt_8, yNt_9, yNt_10)
-    makePlot(111, xNt, nt_list, addSd_Nt, substractSd_Nt, "de neurotransmetteurs")
+    makePlot(231, xNt, nt_list, addSd_Nt, substractSd_Nt, "Neurotransmetteurs")
+    plt.ylabel('Moyenne du nombre de molecules')
 
     # Recepteurs fermes
     rf_list = mean_list(xRf, yRf_1, yRf_2, yRf_3, yRf_4, yRf_5, yRf_6, yRf_7, yRf_8, yRf_9, yRf_10)
     addSd_Rf = addSd_list(xRf, rf_list, yRf_1, yRf_2, yRf_3, yRf_4, yRf_5, yRf_6, yRf_7, yRf_8, yRf_9, yRf_10)
     substractSd_Rf = substractSd_list(xRf, rf_list, yRf_1, yRf_2, yRf_3, yRf_4, yRf_5, yRf_6, yRf_7, yRf_8, yRf_9, yRf_10)
-    makePlot(111, xRf, rf_list, addSd_Rf, substractSd_Rf, "de recepteurs fermes")
+    makePlot(232, xRf, rf_list, addSd_Rf, substractSd_Rf, "Recepteurs fermes")
 
     # Ions
     i_list = mean_list(xI, yI_1, yI_2, yI_3, yI_4, yI_5, yI_6, yI_7, yI_8, yI_9, yI_10)
     addSd_I = addSd_list(xI, i_list, yI_1, yI_2, yI_3, yI_4, yI_5, yI_6, yI_7, yI_8, yI_9, yI_10)
     substractSd_I = substractSd_list(xI, i_list, yI_1, yI_2, yI_3, yI_4, yI_5, yI_6, yI_7, yI_8, yI_9, yI_10)
-    makePlot(111, xI, i_list, addSd_I, substractSd_I, "d'ions")
+    makePlot(233, xI, i_list, addSd_I, substractSd_I, "Ions")
 
     # Complexes
     cplx_list = mean_list(xCplx, yCplx_1, yCplx_2, yCplx_3, yCplx_4, yCplx_5, yCplx_6, yCplx_7, yCplx_8, yCplx_9, yCplx_10)
     addSd_Cplx = addSd_list(xCplx, cplx_list, yCplx_1, yCplx_2, yCplx_3, yCplx_4, yCplx_5, yCplx_6, yCplx_7, yCplx_8, yCplx_9, yCplx_10)
     substractSd_Cplx = substractSd_list(xCplx, cplx_list, yCplx_1, yCplx_2, yCplx_3, yCplx_4, yCplx_5, yCplx_6, yCplx_7, yCplx_8, yCplx_9, yCplx_10)
-    makePlot(111, xCplx, cplx_list, addSd_Cplx, substractSd_Cplx, "de complexes")
+    makePlot(234, xCplx, cplx_list, addSd_Cplx, substractSd_Cplx, "Complexes")
+    plt.ylabel('Moyenne du nombre de molecules')
 
     # Recepteurs ouverts
     ro_list = mean_list(xRo, yRo_1, yRo_2, yRo_3, yRo_4, yRo_5, yRo_6, yRo_7, yRo_8, yRo_9, yRo_10)
     addSd_Ro = addSd_list(xRo, ro_list, yRo_1, yRo_2, yRo_3, yRo_4, yRo_5, yRo_6, yRo_7, yRo_8, yRo_9, yRo_10)
     substractSd_Ro = substractSd_list(xRo, ro_list, yRo_1, yRo_2, yRo_3, yRo_4, yRo_5, yRo_6, yRo_7, yRo_8, yRo_9, yRo_10)
-    makePlot(111, xRo, ro_list, addSd_Ro, substractSd_Ro, "de recepteurs ouverts")
+    makePlot(235, xRo, ro_list, addSd_Ro, substractSd_Ro, "Recepteurs ouverts")
 
-    #plt.show()
+    plt.subplots_adjust(left=0.07, bottom=0.09, right=0.98, top=0.88, wspace=0.27, hspace=0.31)
+    plt.show()
 
 __main__()
 
