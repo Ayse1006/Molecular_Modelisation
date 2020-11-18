@@ -43,8 +43,8 @@ def initiation():
     bpy.ops.mcell.init_cellblender()
     bpy.ops.mcell.preferences_save(name="Cb")
     ## Don't forget to change the pathway of your mcell file ! 
-    #bpy.ops.mcell.set_mcell_binary(filepath="/Users/marlenebarus/Master2/StrubiGL/mcell_3.4_osx")
-    bpy.ops.mcell.set_mcell_binary(filepath="/Users/ayse/Desktop/M2/StrubiGL/blender/mcell_3.4_osx")
+    bpy.ops.mcell.set_mcell_binary(filepath="/Users/marlenebarus/Master2/StrubiGL/mcell_3.4_osx")
+    
  
 #Select faces in edit mode by indicating their index
 def select(indexes):
