@@ -35,6 +35,12 @@ There are 1 graph for each molecules. The mean and standard deviation are shown 
 ## Results
 ![](./Result/result_gif.gif)
 You can find the result video from blender in the **Result** folder
+In the representation are represented:
+* neurotransmetters in red
+* ions in green 
+* complexes in cyan 
+* closed receptors in blue
+* open receptors in pink
 
 ## Contribution 
 You can find our report by clicking on the following link : https://fr.overleaf.com/read/htjbxxbkvmxx
