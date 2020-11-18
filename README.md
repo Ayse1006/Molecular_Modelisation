@@ -1,7 +1,7 @@
 # Molecular_Modelisation
 ## Context
 This project is an exercise on 3D molecular modeling using Blender.
-We modeled the release of neurotransmitters from a vesicle which are goinf to bond with ions in order to form a new molecules called complexe. These complexes are going to attach to closed transmembrane receptors and thus open them.
+We modeled the release of neurotransmitters from a vesicle which are going to bond with ions in order to form a new molecule called a complexe. These complexes are going to attach to closed transmembrane receptors and thus open them.
 
 ## Requirement
 In order to implement this project the following softwares need to be downloaded :
@@ -12,20 +12,20 @@ In order to implement this project the following softwares need to be downloaded
 ## Usage
 ### setting Blender
 For the first launch of blender, importing cellblender is needed. It allows to have the cellblender menu needed for the project.
-Do not forget to change the pathway of the mcell file in tha initialisation.py script (line 46).
+Do not forget to change the pathway of the mcell file in the initialisation.py script (line 46).
 **initialisation.py** has all the functions needed in order to build and set up all the parameters for the simulation.
 
 ### Launching simulation
 To launch the simulation, the script has to be opened in blender. To do that default view has to be changed to scripting view.
 Open the **initialisation.py** and run it *(Text > Run script)*.
-The figures will be showed in the windows. In the cellblender window all the paramters should be filled up.
+The figures will be shown in the windows. In the cellblender window all the parameters should be filled in.
 Don't forget to save the blender file in order to go on.
 To run the simulation go to *(Cellblender > Run simulation )*. But before the seed number should be set to 10. This will launch 10 simulations. Go to *(Run simulation > Output/Control Options)* and change the End Seed to 10.
-All that is need to do is *(Export & Run)*
+All that is needed to do is *(Export & Run)*
 
 ### Creating graphs
-When the simulation is runed, blender will create a new folder with the same name as the blender file. In this folder there are multiple 
-files and folder but only a few of them will be used to create the graphs.
+When the simulation is run, blender will create a new folder with the same name as the blender file. In this folder there are multiple 
+files and folders but only a few of them will be used to create the graphs.
 **statistics.py** should be put put inside the new folder. 
 Then with an access to a terminal in the new folder, run the script `$ python statistic.py``
 The output should be like the following : 
